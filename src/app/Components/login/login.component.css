@@ -1,107 +1,111 @@
 body {
-  font-family: 'Poppins', sans-serif; /* Fuente moderna y legible */
-  background-color: #3fe3e6; /* Color de fondo principal */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  position: relative; /* Agrega position relative al body */
-  }
-  
-  .login-container {
-    width: 90%; /* Ancho inicial del 90% */
-    max-width: 400px; /* Ancho máximo de 400px */
-    padding: 30px; /* Margen interno aumentado */
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
-    border-radius: 12px; /* Bordes redondeados */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra suave */
-    backdrop-filter: blur(5px); /* Efecto de desenfoque de fondo (opcional) */
-    position: absolute; /* Cambia a absolute para posicionarlo */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Centra el contenedor */
-  }
-  
-  .login-box {
-    text-align: center;
-  }
-  
-  .icon img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 30px; /* Margen inferior aumentado */
-  }
-  
-  h1
-  {
-    text-align: center; /* Centra el texto horizontalmente */
-    margin-bottom: 30px; /* Margen inferior aumentado */
-    color: #333; /* Color de texto oscuro */
-    font-weight: 600; /* Negrita */
-  }
-  
-  h1 span {
-    color: #007bff; /* Color de resaltado (azul) */
-    font-weight: 700; /* Negrita extra */
+  font-family: 'Poppins', sans-serif;
+  background-color: #3fe3e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  position: relative;
 }
 
-  h2{
-    color: #333;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  app-input-group {
-    margin-bottom: 20px; /* Margen inferior aumentado */
-  }
-  
-  app-button {
-    padding: 12px; /* Margen interno aumentado */
-    background-color: #007bff; /* Color de botón principal (azul) */
-    color: #fff;
-    border: none;
-    border-radius: 6px; /* Bordes redondeados */
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-weight: 500; /* Semi-negrita */
-  }
-  
-  app-button:hover {
-    background-color: #0056b3; /* Color de botón al pasar el mouse */
-  }
-  
-  .options {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-    margin-bottom: 20px; /* Margen inferior aumentado */
-    font-size: 14px;
-  }
-  
-  .signup-text {
-    margin-top: 25px; /* Margen superior aumentado */
-    font-size: 14px;
-  }
-  
-  .signup-text a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .signup-text a:hover {
-    text-decoration: underline;
-  }
+.login-container {
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(5px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-  /* Estilos responsivos */
-  @media (max-width: 768px) {
-    .login-container {
-      width: 95%; /* Ajusta el ancho para pantallas más pequeñas */
-    }
-    
-    /* Otros ajustes para elementos específicos si es necesario */
+.login-box {
+  text-align: center;
+}
+
+.icon img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 30px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-weight: 600;
+}
+
+h1 span {
+  color: #007bff;
+  font-weight: 700;
+}
+
+h2 {
+  color: #333;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.login-button {
+  padding: 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: 500;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.register-link {
+  margin-top: 25px;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    width: 95%;
   }
-  
+}

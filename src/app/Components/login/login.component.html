@@ -1,29 +1,54 @@
-
-
-
-
 <div class="login-container">
+  <div class="login-box">
+    <div class="icon">
+      <img src="assets/logo.png" alt="VitalityGo Logo">
+    </div>
+    
+    <h1>Vitality<span>Go</span></h1>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <input 
+          type="email" 
+          formControlName="email" 
+          placeholder="Email"
+          class="form-control">
+        <div class="error-message" 
+             *ngIf="loginForm.get('email')?.errors?.['required'] && 
+                    loginForm.get('email')?.touched">
+          Email is required
+        </div>
+      </div>
 
-  <h1>Vitality<span>Go</span></h1>
-  
-    <div class="login-box">
-      <div class="icon">
-        <img src="assets/user-icon.png" alt="User Icon">
+      <div class="form-group">
+        <input 
+          type="password" 
+          formControlName="password" 
+          placeholder="Password"
+          class="form-control">
+        <div class="error-message" 
+             *ngIf="loginForm.get('password')?.errors?.['required'] && 
+                    loginForm.get('password')?.touched">
+          Password is required
+        </div>
       </div>
-      <h2>Login</h2>
-  
-      <form (submit)="onLogin()">
-        <app-input-group type="text" placeholder="Username"></app-input-group>
-        <app-input-group type="password" placeholder="Password"></app-input-group>
-        <app-button>Login Now</app-button>
-      </form>
-  
-      <div class="options">
-        <label><input type="checkbox"> Recuérdame</label>
-        <a href="#">¿Olvidaste tu contraseña?</a>
+
+      <div class="remember-forgot">
+        <label>
+          <input type="checkbox" formControlName="rememberMe"> Remember me
+        </label>
+        <a href="#" class="forgot-password">Forgot Password?</a>
       </div>
-  
-      <p class="signup-text">¿No tienes cuenta? <a href="#">Crea tu cuenta</a></p>
+
+      <button type="submit" 
+              [disabled]="!loginForm.valid" 
+              class="login-button">
+        Login
+      </button>
+    </form>
+
+    <div class="register-link">
+      Don't have an account? <a routerLink="/register">Sign up</a>
     </div>
   </div>
-  
+</div>
