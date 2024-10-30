@@ -1,0 +1,21 @@
+.button-log {
+  background-color: #3fe3e670; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 80%; /* Adjust width for responsiveness */
+  max-width: 400px; /* Set a maximum width */
+}
+  
+@media (max-width: 768px) {
+  .button-log {
+    width: 90%; /* Increase width on smaller screens */
+  }
+}
