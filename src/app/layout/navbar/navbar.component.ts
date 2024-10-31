@@ -1,22 +1,37 @@
+// navbar.component.ts
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service'; // Corregir esta línea
 import { CommonModule } from '@angular/common';
+import { Router, NavigationEnd, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [
+    CommonModule,
+    RouterLink
+  ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   userName: string = '';
   userProfileImage: string = '';
+  currentRoute: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event) => {
+      this.currentRoute = event.url;
+    });
+
     const currentUser = this.authService.getCurrentUser();
     if (currentUser) {
       this.userName = currentUser.name || 'Usuario';
@@ -29,5 +44,14 @@ export class NavbarComponent implements OnInit {
         this.userProfileImage = user.profileImage || 'assets/profile-placeholder.jpg';
       }
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/home']);
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
