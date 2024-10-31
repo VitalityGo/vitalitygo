@@ -1,23 +1,41 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+interface User {
+  name: string;
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private isAuthenticated = new BehaviorSubject<boolean>(false);
+  private users: User[] = [
+    { name: 'Test User', email: 'test@test.com', password: 'password' }
+  ];
 
-  constructor() { }
+  constructor() {
+    this.checkAuthStatus();
+  }
 
   login(email: string, password: string): boolean {
-    // Aquí implementarías la lógica real de autenticación
-    if (email === 'test@test.com' && password === 'password') {
+    const user = this.users.find(u => u.email === email && u.password === password);
+    if (user) {
       this.isAuthenticated.next(true);
-      // Aquí podrías guardar el token en localStorage
       localStorage.setItem('token', 'your-token-here');
       return true;
     }
     return false;
+  }
+
+  register(name: string, email: string, password: string): boolean {
+    if (this.users.some(u => u.email === email)) {
+      return false; // El email ya está registrado
+    }
+    this.users.push({ name, email, password });
+    return true;
   }
 
   logout(): void {
@@ -29,7 +47,6 @@ export class AuthService {
     return this.isAuthenticated.asObservable();
   }
 
-  // Método para verificar si hay un token guardado
   checkAuthStatus(): boolean {
     const token = localStorage.getItem('token');
     const isAuth = !!token;
