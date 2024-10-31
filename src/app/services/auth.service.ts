@@ -2,23 +2,47 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 interface User {
+
   email: string;
+
   password: string;
+
+  name?: string;  // Añade esta línea
+
+  profileImage?: string;  // Añade esta línea
+
 }
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class AuthService {
   private isAuthenticated = new BehaviorSubject<boolean>(false);
   private users: User[] = [];
 
   constructor() {
-    // Cargar usuarios guardados al iniciar
-    const savedUsers = localStorage.getItem('users');
-    if (savedUsers) {
-      this.users = JSON.parse(savedUsers);
-    }
+    
+
+  const savedUsers = localStorage.getItem('users');
+
+  if (savedUsers) {
+
+    this.users = JSON.parse(savedUsers);
+
+  }
+
+
+  // Cargar usuario actual
+
+  const currentUser = localStorage.getItem('currentUser');
+
+  if (currentUser) {
+
+    this.currentUserSubject.next(JSON.parse(currentUser));
+
+  }
   }
 
   register(email: string, password: string): boolean {
@@ -39,8 +63,9 @@ export class AuthService {
     
     if (user) {
       this.isAuthenticated.next(true);
+      this.currentUserSubject.next(user);
       localStorage.setItem('currentUser', JSON.stringify(user));
-      localStorage.setItem('token', 'token-' + Date.now()); // Token simulado
+      localStorage.setItem('token', 'token-' + Date.now());
       return true;
     }
     return false;
@@ -48,10 +73,10 @@ export class AuthService {
 
   logout(): void {
     this.isAuthenticated.next(false);
+    this.currentUserSubject.next(null);
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
   }
-
   isAuthenticated$(): Observable<boolean> {
     return this.isAuthenticated.asObservable();
   }
@@ -64,7 +89,27 @@ export class AuthService {
   }
 
   getCurrentUser(): User | null {
-    const userStr = localStorage.getItem('currentUser');
-    return userStr ? JSON.parse(userStr) : null;
+    return this.currentUserSubject.value;
   }
+
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+currentUser$ = this.currentUserSubject.asObservable();
+
+updateUserProfile(name: string, profileImage: string): void {
+  const currentUser = this.getCurrentUser();
+  if (currentUser) {
+    currentUser.name = name;
+    currentUser.profileImage = profileImage;
+    this.currentUserSubject.next(currentUser);
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    
+    // Actualizar también en la lista de usuarios
+    const userIndex = this.users.findIndex(u => u.email === currentUser.email);
+    if (userIndex !== -1) {
+      this.users[userIndex] = currentUser;
+      localStorage.setItem('users', JSON.stringify(this.users));
+    }
+  }
+}
+  
 }

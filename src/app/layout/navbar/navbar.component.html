@@ -1,6 +1,15 @@
 <nav>
-    <div class="profile">
-      <img src="assets/profile-placeholder.jpg" alt="Profile" />
+  <div class="nav-left">
+    <div class="profile-section">
+      <div class="profile-pic">
+        <img [src]="userProfileImage || 'assets/profile-placeholder.jpg'" alt="Profile" />
+      </div>
+      <span class="user-name">{{ userName || 'Usuario' }}</span>
     </div>
-    <a routerLink="/settings">Settings</a>
-  </nav>
+  </div>
+  <div class="nav-right">
+    <button class="settings-btn" routerLink="/settings">
+      <i class="material-icons">settings</i>
+    </button>
+  </div>
+</nav>
