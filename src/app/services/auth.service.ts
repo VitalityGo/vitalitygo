@@ -95,21 +95,46 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
 currentUser$ = this.currentUserSubject.asObservable();
 
-updateUserProfile(name: string, profileImage: string): void {
-  const currentUser = this.getCurrentUser();
-  if (currentUser) {
-    currentUser.name = name;
-    currentUser.profileImage = profileImage;
-    this.currentUserSubject.next(currentUser);
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    
-    // Actualizar también en la lista de usuarios
-    const userIndex = this.users.findIndex(u => u.email === currentUser.email);
-    if (userIndex !== -1) {
-      this.users[userIndex] = currentUser;
-      localStorage.setItem('users', JSON.stringify(this.users));
+updateUserProfile(name: string, profileImage: string): Promise<void> {
+
+  return new Promise((resolve, reject) => {
+
+    const currentUser = this.getCurrentUser();
+
+    if (currentUser) {
+
+      currentUser.name = name;
+
+      currentUser.profileImage = profileImage;
+
+      this.currentUserSubject.next(currentUser);
+
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+      
+
+      // Actualizar también en la lista de usuarios
+
+      const userIndex = this.users.findIndex(u => u.email === currentUser.email);
+
+      if (userIndex !== -1) {
+
+        this.users[userIndex] = currentUser;
+
+        localStorage.setItem('users', JSON.stringify(this.users));
+
+      }
+
+      resolve();
+
+    } else {
+
+      reject(new Error('No hay usuario autenticado'));
+
     }
-  }
+
+  });
+
 }
   
 }

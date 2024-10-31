@@ -1,4 +1,3 @@
-// settings.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -27,7 +26,6 @@ interface UserSettings {
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-  // Declarar las propiedades con sus tipos
   user: User = {
     name: '',
     email: '',
@@ -41,18 +39,14 @@ export class SettingsComponent implements OnInit {
     units: 'metric'
   };
 
+  currentPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
-  currentPassword: string = '';
   errorMessage: string = '';
   successMessage: string = '';
   selectedFile: File | null = null;
-  
-  constructor(private authService: AuthService, private router: Router) {
 
-    console.log('SettingsComponent constructor called');
-  
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     const currentUser = this.authService.getCurrentUser();
@@ -64,7 +58,6 @@ export class SettingsComponent implements OnInit {
       };
     }
     
-    // Cargar configuraciones guardadas
     const savedSettings = localStorage.getItem('userSettings');
     if (savedSettings) {
       this.settings = { ...JSON.parse(savedSettings) };
@@ -75,7 +68,6 @@ export class SettingsComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      // Crear preview de la imagen
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.user.profileImage = e.target.result;
@@ -85,20 +77,31 @@ export class SettingsComponent implements OnInit {
   }
 
   async saveProfile() {
+
     try {
+
       if (this.selectedFile) {
-        // Aquí irían las funciones para subir la imagen a un servidor
-        // Por ahora solo guardamos la preview
+
         this.user.profileImage = await this.getBase64(this.selectedFile);
+
       }
 
-      this.authService.updateUserProfile(this.user.name, this.user.profileImage || '');
+      
+
+      await this.authService.updateUserProfile(this.user.name, this.user.profileImage || '');
+
       this.successMessage = 'Perfil actualizado correctamente';
+
       setTimeout(() => this.successMessage = '', 3000);
+
     } catch (error) {
-      this.errorMessage = 'Error al actualizar el perfil';
+
+      this.errorMessage = 'Error al actualizar el perfil: ' + (error instanceof Error ? error.message : String(error));
+
       setTimeout(() => this.errorMessage = '', 3000);
+
     }
+
   }
 
   saveSettings() {
@@ -112,7 +115,7 @@ export class SettingsComponent implements OnInit {
       this.errorMessage = 'Las contraseñas no coinciden';
       return;
     }
-
+    
     try {
       // Aquí iría la lógica para cambiar la contraseña
       this.successMessage = 'Contraseña actualizada correctamente';
@@ -128,7 +131,6 @@ export class SettingsComponent implements OnInit {
 
   deleteAccount() {
     if (confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')) {
-      // Aquí iría la lógica para eliminar la cuenta
       this.authService.logout();
       this.router.navigate(['/login']);
     }
