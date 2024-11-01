@@ -32,15 +32,15 @@ nav {
   cursor: pointer;
 }
 
-.profile img {
+.profile-pic {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  transition: transform 0.2s;
+  object-fit: cover; 
 }
 
-.profile img:hover {
-  transform: scale(1.1);
+.profile-pic:hover {
+  opacity: 0.8; 
 }
 
 .profile-menu {
