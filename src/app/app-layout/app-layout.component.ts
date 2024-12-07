@@ -1,7 +1,3 @@
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:3852150750.
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:3613695930.
-
-
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../layout/navbar/navbar.component';

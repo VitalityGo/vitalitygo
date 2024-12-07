@@ -1,0 +1,61 @@
+/* Contenedor principal */
+.missions-container {
+  background-color: #007bff; /* Azul */
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Títulos principales */
+.missions-container h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+/* Estilo para las secciones de misiones (diarias y semanales) */
+.missions-container h3 {
+  background-color: #0056b3; /* Azul más oscuro para los subtítulos */
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Contenedor de misiones (diarias y semanales) */
+.missions-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Elemento de lista de misiones */
+.missions-container li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #fff;
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo ligeramente oscuro */
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+/* Estilo para el texto de las misiones */
+.missions-container li span {
+  margin-left: 10px;
+  flex-grow: 1;
+}
+
+/* Estilo para misiones completadas */
+.missions-container li span.completed {
+  text-decoration: line-through;
+  color: #28a745; /* Color verde para las misiones completadas */
+}
+
+/* Estilo para los checkboxes */
+.missions-container input[type="checkbox"] {
+  accent-color: #28a745; /* Color verde para los checkboxes */
+  margin-right: 10px;
+}
