@@ -6,23 +6,20 @@
 
     <section class="stats-cards">
         <div class="stat-card">
-            <h2>Peso Corporal</h2>
-            <p id="peso">70 kg</p> <!-- Ejemplo de valor, puedes cambiarlo dinámicamente -->
+            <a href="myStepsChart">Pasos diarios</a>
         </div>
         <div class="stat-card">
-            <h2>Pasos Realizados</h2>
-            <p id="pasos">10,000 pasos</p> <!-- Ejemplo de valor, puedes cambiarlo dinámicamente -->
+            <a href="myWaterChart">Agua bebida</a>
         </div>
         <div class="stat-card">
-            <h2>Agua Bebida</h2>
-            <p id="agua">2 litros</p> <!-- Ejemplo de valor, puedes cambiarlo dinámicamente -->
+            <a href="myWeightChart">Peso Corporal</a>
         </div>
     </section>
 
     <section class="charts">
         <h2>Gráficos de Tendencia</h2>
-        <!-- Integrar gráficos aquí -->
-        <!-- Ejemplo de un gráfico de barras de ng2-charts -->
-        <!-- <canvas baseChart [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [legend]="chartLegend" [chartType]="chartType"></canvas> -->
+        <canvas id="myStepsChart" width="400" height="200"></canvas>
+        <canvas id="myWaterChart" width="400" height="200"></canvas>
+        <canvas id="myWeightChart" width="400" height="200"></canvas>
     </section>
 </div>
