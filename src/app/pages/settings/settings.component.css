@@ -23,10 +23,17 @@
 }
 
 h2 {
-  color: #3C8CE7;
+  color: #00bcd4; /* Azul brillante */
   margin-bottom: 20px;
   font-size: 1.8em; /* Aumentar tamaño del encabezado */
   text-align: center; /* Centrar el texto */
+}
+
+h3 {
+  color: #333;
+  font-size: 1.4em;
+  margin-bottom: 20px;
+  font-weight: 600;
 }
 
 .profile-image-container {
@@ -35,11 +42,11 @@ h2 {
 }
 
 .profile-image {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #3C8CE7; /* Borde más grueso */
+  border: 4px solid #00bcd4; /* Borde más grueso */
   transition: transform 0.3s; /* Efecto de zoom */
 }
 
@@ -47,24 +54,29 @@ h2 {
   transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
 }
 
-#profile-image-input {
-  display: none;
+input[type="file"] {
+  display: none; /* Ocultar el input file real */
 }
 
-.change-photo-btn {
-  display: inline-block;
-  background-color: #3C8CE7;
+.file-upload-btn {
+  background-color: #00bcd4; /* Azul brillante */
   color: white;
-  padding: 10px 20px; /* Aumentar padding */
-  border-radius: 4px;
+  padding: 12px 30px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s, transform 0.2s;
+  text-transform: uppercase;
   margin-top: 10px;
-  font-size: 1em;
-  transition: background-color 0.3s; /* Transición suave */
 }
 
-.change-photo-btn:hover {
-  background-color: #357abd; /* Color al pasar el mouse */
+.file-upload-btn:hover {
+  background-color: #0097a7; /* Azul más oscuro al pasar el ratón */
+  transform: scale(1.05);
+}
+
+.file-upload-btn:focus {
+  outline: none;
 }
 
 .form-group {
@@ -91,112 +103,71 @@ select {
 }
 
 input:focus {
-  border-color: #3C8CE7; /* Color de borde en foco */
-  box-shadow: 0 0 5px rgba(60, 140, 231, 0.2); /* Sombra en foco */
+  border-color: #00bcd4; /* Color de borde en foco */
+  box-shadow: 0 0 5px rgba(0, 188, 212, 0.2); /* Sombra en foco */
 }
 
-.toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-.toggle-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.toggle-switch label {
-  position: absolute;
+button {
+  font-family: 'Poppins', sans-serif;
+  padding: 14px 28px;
+  border-radius: 8px;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 34px;
-}
-
-.toggle-switch label:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
-}
-
-.toggle-switch input:checked + label {
-  background-color: #3C8CE7;
-}
-
-.toggle-switch input:checked + label:before {
-  transform: translateX(26px);
-}
-
-.save-btn {
-  background-color: #3C8CE7;
-  color: white;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
   border: none;
-  padding: 12px; /* Aumentar padding */
-  border-radius: 5px; /* Bordes más redondeados */
-  cursor: pointer;
-  font-size: 1em;
-  width:  100%;
-  margin-top: 10px;
-  transition: background-color 0.3s; /* Transición suave */
-}
-
-.save-btn:hover {
-  background-color: #357abd; /* Color al pasar el mouse */
-}
-
-.danger-zone {
-  border: 1px solid #ff4d4d;
-}
-
-.delete-btn {
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  padding: 12px; /* Aumentar padding */
-  border-radius: 5px; /* Bordes más redondeados */
-  cursor: pointer;
-  font-size: 1em;
   width: 100%;
-  transition: background-color 0.3s; /* Transición suave */
-}
-
-.delete-btn:hover {
-  background-color: #ff3333; /* Color al pasar el mouse */
-}
-
-.success-message,
-.error-message {
-  padding: 10px;
-  border-radius: 4px;
-  margin-top: 20px;
+  margin-top: 12px;
   text-align: center;
 }
 
+button:focus {
+  outline: none;
+}
+
+/* Botón de Guardar Perfil y Guardar Configuración */
+.save-btn {
+  background-color: #00bcd4; /* Azul brillante */
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #0097a7; /* Azul más oscuro */
+  transform: scale(1.05);
+}
+
+/* Botón de Eliminar Cuenta */
+.delete-btn {
+  background-color: #ff4081; /* Rosa brillante */
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #ff3366; /* Rosa más fuerte */
+  transform: scale(1.05);
+}
+
+/* Mensajes de éxito y error */
+.success-message,
+.error-message {
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-size: 1.1em;
+}
+
 .success-message {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+  background-color: #a5d6a7; /* Verde suave */
+  color: #388e3c; /* Verde oscuro para contraste */
+  border: 1px solid #81c784;
 }
 
 .error-message {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  background-color: #ffccbc; /* Rojo suave */
+  color: #d32f2f; /* Rojo intenso */
+  border: 1px solid #ff7043;
 }
 
+/* Responsive */
 @media (max-width: 600px) {
   .settings-container {
       padding: 10px;
@@ -211,13 +182,16 @@ input:focus {
   }
 
   .profile-image {
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
   }
 
-  .change-photo-btn,
   .save-btn,
   .delete-btn {
       font-size: 0.9em;
+  }
+
+  .file-upload-btn {
+      font-size: 1em;
   }
 }

@@ -1,27 +1,33 @@
 /* Contenedor principal */
 .missions-container {
-  background-color: #007bff; /* Azul */
-  padding: 20px;
-  border-radius: 8px;
+  background-color: #007bff; /* Azul brillante */
+  padding: 25px;
+  border-radius: 12px; /* Bordes más redondeados */
   color: white;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 650px;
+  margin: 20px auto;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2); /* Sombra para darle profundidad */
 }
 
 /* Títulos principales */
 .missions-container h2 {
   text-align: center;
-  font-size: 2em;
-  margin-bottom: 20px;
+  font-size: 2.2em;
+  margin-bottom: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
-/* Estilo para las secciones de misiones (diarias y semanales) */
+/* Estilo para los subtítulos de misiones */
 .missions-container h3 {
-  background-color: #0056b3; /* Azul más oscuro para los subtítulos */
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
+  background-color: #0056b3; /* Azul más oscuro */
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
   text-align: center;
+  font-size: 1.6em;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 /* Contenedor de misiones (diarias y semanales) */
@@ -35,27 +41,43 @@
 .missions-container li {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #fff;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Línea divisoria suave */
   background-color: rgba(255, 255, 255, 0.1); /* Fondo ligeramente oscuro */
-  border-radius: 5px;
-  margin-bottom: 5px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Efecto de hover para los elementos de la lista */
+.missions-container li:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Fondo más claro al pasar el ratón */
+  transform: translateX(5px); /* Desplazamiento ligero al pasar el mouse */
 }
 
 /* Estilo para el texto de las misiones */
 .missions-container li span {
-  margin-left: 10px;
+  margin-left: 15px;
   flex-grow: 1;
+  font-size: 1.1em;
 }
 
 /* Estilo para misiones completadas */
 .missions-container li span.completed {
   text-decoration: line-through;
-  color: #28a745; /* Color verde para las misiones completadas */
+  color: #28a745; /* Verde para las misiones completadas */
+  font-weight: 600;
 }
 
 /* Estilo para los checkboxes */
 .missions-container input[type="checkbox"] {
   accent-color: #28a745; /* Color verde para los checkboxes */
-  margin-right: 10px;
+  margin-right: 15px;
+  transform: scale(1.1); /* Aumenta ligeramente el tamaño del checkbox */
+  transition: transform 0.2s ease;
+}
+
+/* Efecto de hover en el checkbox */
+.missions-container input[type="checkbox"]:hover {
+  transform: scale(1.2);
 }
