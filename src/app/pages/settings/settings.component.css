@@ -195,3 +195,12 @@ button:focus {
       font-size: 1em;
   }
 }
+.close-btn {
+  background-color: #84c6f3; /* Rosa brillante */
+  color: white;
+}
+
+.close-btn:hover {
+  background-color: #338bff; /* Rosa más fuerte */
+  transform: scale(1.05);
+}

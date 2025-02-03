@@ -62,6 +62,10 @@ export class SettingsComponent implements OnInit {
     if (savedSettings) {
       this.settings = { ...JSON.parse(savedSettings) };
     }
+    // Aplicar el modo oscuro si está activado en localStorage
+  if (this.settings.darkMode) {
+    document.body.classList.add('dark-mode');
+  }
   }
 
   onFileSelected(event: any) {
@@ -106,9 +110,12 @@ export class SettingsComponent implements OnInit {
 
   saveSettings() {
     localStorage.setItem('userSettings', JSON.stringify(this.settings));
+  
+  
     this.successMessage = 'Configuración guardada correctamente';
     setTimeout(() => this.successMessage = '', 3000);
   }
+  
 
   changePassword() {
     if (this.newPassword !== this.confirmPassword) {
