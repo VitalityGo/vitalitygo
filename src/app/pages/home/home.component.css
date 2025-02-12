@@ -75,7 +75,7 @@ button {
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px; /* Espaciado mayor entre el texto y el ícono */
+  gap: 15px; /* Espaciado mayor entre el texto y el ícono */
   margin: 0 auto;
   transition: background-color 0.3s, transform 0.3s;
   font-size: 16px; /* Ajuste de tamaño de fuente */
@@ -108,6 +108,7 @@ input {
 input:focus {
   border-color: #3C8CE7; /* Color de borde azul en foco */
   box-shadow: 0 0 6px rgba(60, 140, 231, 0.3); /* Sombra azul suave */
+  
 }
 
 /* Contenedor de la gráfica */

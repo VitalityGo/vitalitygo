@@ -16,6 +16,8 @@ export class HomeComponent implements OnInit {
   waterIntake: number = 0;
   weightData: number[] = [];
   weight: number = 0;
+  customWaterAmount: number = 500; // Cantidad de agua ingresada por el usuario (ml)
+  customStepsAmount: number = 1000; // Cantidad de pasos ingresada por el usuario
 
   // Configuración del gráfico
   public lineChartData: ChartConfiguration['data'] = {
@@ -60,7 +62,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadInitialData() {
-    this.steps = 5000;
+    this.steps = 0;
     this.waterIntake = 2;
     this.weightData = [70, 71, 69, 68, 70];
     this.updateChartData();
@@ -70,8 +72,24 @@ export class HomeComponent implements OnInit {
     this.steps += 1000;
   }
 
+  // Nueva función para agregar la cantidad personalizada de pasos
+  addCustomSteps() {
+    if (this.customStepsAmount > 0) {
+      this.steps += this.customStepsAmount;
+      this.customStepsAmount = 1000; // Reiniciamos el input con un valor por defecto
+    }
+  }
+
   updateWaterIntake() {
     this.waterIntake += 0.5;
+  }
+
+  // Nueva función para agregar la cantidad personalizada de agua
+  addCustomWaterIntake() {
+    if (this.customWaterAmount > 0) {
+      this.waterIntake += this.customWaterAmount / 1000; // Convertimos ml a litros
+      this.customWaterAmount = 500; // Reiniciamos el input con un valor por defecto
+    }
   }
 
   updateWeight() {
