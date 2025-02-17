@@ -19,11 +19,10 @@ interface UserSettings {
 }
 
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+    selector: 'app-settings',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './settings.component.html',
+    styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
   user: User = {

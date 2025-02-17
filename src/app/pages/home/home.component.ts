@@ -5,11 +5,10 @@ import { BaseChartDirective } from 'ng2-charts';  // Cambiado desde NgChartsModu
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, BaseChartDirective]  // Cambiado desde NgChartsModule
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css'],
+    imports: [CommonModule, FormsModule, BaseChartDirective] // Cambiado desde NgChartsModule
 })
 export class HomeComponent implements OnInit {
   steps: number = 0;

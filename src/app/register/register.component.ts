@@ -5,11 +5,10 @@ import { AuthService } from '../services/auth.service';
 import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [FormsModule, NgIf, RouterModule],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+    selector: 'app-register',
+    imports: [FormsModule, NgIf, RouterModule],
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   name: string = '';

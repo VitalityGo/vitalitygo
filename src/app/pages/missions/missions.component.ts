@@ -8,11 +8,10 @@ interface Mission {
 }
 
 @Component({
-  selector: 'app-missions',
-  templateUrl: './missions.component.html',
-  imports: [FormsModule, NgFor],
-  styleUrls: ['./missions.component.css'],
-  standalone: true
+    selector: 'app-missions',
+    templateUrl: './missions.component.html',
+    imports: [FormsModule, NgFor],
+    styleUrls: ['./missions.component.css']
 })
 export class MissionsComponent {
   // Misiones diarias

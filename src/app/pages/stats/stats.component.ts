@@ -1,9 +1,10 @@
 import { Component, AfterViewInit } from '@angular/core';
 
 @Component({
-  selector: 'app-stats',
-  templateUrl: './stats.component.html',
-  styleUrls: ['./stats.component.css']
+    selector: 'app-stats',
+    templateUrl: './stats.component.html',
+    styleUrls: ['./stats.component.css'],
+    standalone: false
 })
 export class StatsComponent implements AfterViewInit {
   ngAfterViewInit() {
