@@ -12,7 +12,7 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  name: string = '';  // Añade esta línea
+  name: string = '';
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
@@ -23,8 +23,7 @@ export class RegisterComponent {
     private authService: AuthService
   ) {}
 
-  onSubmit() {
-    // Validaciones básicas
+  async onSubmit() {
     if (!this.name || !this.email || !this.password || !this.confirmPassword) {
       this.errorMessage = 'Por favor, complete todos los campos';
       return;
@@ -45,13 +44,17 @@ export class RegisterComponent {
       return;
     }
 
-    // Intentar registrar
-    if (this.authService.register(this.email, this.password)) {
-      // Registro exitoso
-      alert('Registro exitoso! Por favor, inicie sesión.');
-      this.router.navigate(['/login']);
-    } else {
-      this.errorMessage = 'El email ya está registrado';
+    try {
+      const isRegistered = await this.authService.register(this.email, this.password);
+      if (isRegistered) {
+        await this.authService.updateUserProfile(this.name, '');
+        this.router.navigate(['/login']);
+      } else {
+        this.errorMessage = 'Error al registrar el usuario';
+      }
+    } catch (error) {
+      console.error("Error en el registro:", error);
+      this.errorMessage = 'Error al crear la cuenta. Por favor, intente de nuevo.';
     }
   }
 

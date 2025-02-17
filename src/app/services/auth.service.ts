@@ -1,140 +1,134 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, user } from '@angular/fire/auth';
+import { Firestore, doc, setDoc, getDoc, updateDoc } from '@angular/fire/firestore';
 
 interface User {
-
   email: string;
-
-  password: string;
-
-  name?: string;  // Añade esta línea
-
-  profileImage?: string;  // Añade esta línea
-
+  name?: string;
+  profileImage?: string;
+  createdAt?: Date;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-
-
 export class AuthService {
   private isAuthenticated = new BehaviorSubject<boolean>(false);
-  private users: User[] = [];
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor() {
-    
-
-  const savedUsers = localStorage.getItem('users');
-
-  if (savedUsers) {
-
-    this.users = JSON.parse(savedUsers);
-
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore
+  ) {
+    // Observar el estado de autenticación
+    user(this.auth).subscribe(user => {
+      if (user) {
+        this.isAuthenticated.next(true);
+        this.loadUserData(user.uid);
+      } else {
+        this.isAuthenticated.next(false);
+        this.currentUserSubject.next(null);
+      }
+    });
   }
 
-
-  // Cargar usuario actual
-
-  const currentUser = localStorage.getItem('currentUser');
-
-  if (currentUser) {
-
-    this.currentUserSubject.next(JSON.parse(currentUser));
-
-  }
-  }
-
-  register(email: string, password: string): boolean {
-    // Verificar si el usuario ya existe
-    if (this.users.some(user => user.email === email)) {
+  async register(email: string, password: string): Promise<boolean> {
+    try {
+      const result = await createUserWithEmailAndPassword(this.auth, email, password);
+      if (result.user) {
+        // Crear documento del usuario en Firestore
+        const userRef = doc(this.firestore, `users/${result.user.uid}`);
+        await setDoc(userRef, {
+          email,
+          createdAt: new Date(),
+          name: '',
+          profileImage: ''
+        });
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error en registro:', error);
       return false;
     }
-
-    // Agregar nuevo usuario
-    this.users.push({ email, password });
-    // Guardar en localStorage
-    localStorage.setItem('users', JSON.stringify(this.users));
-    return true;
   }
 
-  login(email: string, password: string): boolean {
-    const user = this.users.find(u => u.email === email && u.password === password);
-    
-    if (user) {
-      this.isAuthenticated.next(true);
-      this.currentUserSubject.next(user);
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      localStorage.setItem('token', 'token-' + Date.now());
-      return true;
+  async login(email: string, password: string): Promise<boolean> {
+    try {
+      const result = await signInWithEmailAndPassword(this.auth, email, password);
+      if (result.user) {
+        const userRef = doc(this.firestore, `users/${result.user.uid}`);
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          const userData = userDoc.data() as User;
+          this.currentUserSubject.next(userData);
+        }
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error en login:', error);
+      return false;
     }
-    return false;
   }
 
-  logout(): void {
-    this.isAuthenticated.next(false);
-    this.currentUserSubject.next(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('currentUser');
+  async logout(): Promise<void> {
+    try {
+      await signOut(this.auth);
+      this.isAuthenticated.next(false);
+      this.currentUserSubject.next(null);
+      localStorage.removeItem('token');
+      localStorage.removeItem('currentUser');
+    } catch (error) {
+      console.error('Error en logout:', error);
+    }
   }
+
+  private async loadUserData(uid: string): Promise<void> {
+    try {
+      const userRef = doc(this.firestore, `users/${uid}`);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        const userData = userDoc.data() as User;
+        this.currentUserSubject.next(userData);
+      }
+    } catch (error) {
+      console.error('Error cargando datos del usuario:', error);
+    }
+  }
+
+  async updateUserProfile(name: string, profileImage: string): Promise<void> {
+    try {
+      const user = this.auth.currentUser;
+      if (user) {
+        const userRef = doc(this.firestore, `users/${user.uid}`);
+        await updateDoc(userRef, {
+          name,
+          profileImage
+        });
+
+        const currentUser = this.getCurrentUser();
+        if (currentUser) {
+          currentUser.name = name;
+          currentUser.profileImage = profileImage;
+          this.currentUserSubject.next(currentUser);
+        }
+      } else {
+        throw new Error('No hay usuario autenticado');
+      }
+    } catch (error) {
+      console.error('Error actualizando perfil:', error);
+      throw error;
+    }
+  }
+
   isAuthenticated$(): Observable<boolean> {
     return this.isAuthenticated.asObservable();
-  }
-
-  checkAuthStatus(): boolean {
-    const token = localStorage.getItem('token');
-    const isAuth = !!token;
-    this.isAuthenticated.next(isAuth);
-    return isAuth;
   }
 
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }
-
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-currentUser$ = this.currentUserSubject.asObservable();
-
-updateUserProfile(name: string, profileImage: string): Promise<void> {
-
-  return new Promise((resolve, reject) => {
-
-    const currentUser = this.getCurrentUser();
-
-    if (currentUser) {
-
-      currentUser.name = name;
-
-      currentUser.profileImage = profileImage;
-
-      this.currentUserSubject.next(currentUser);
-
-      localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-      
-
-      // Actualizar también en la lista de usuarios
-
-      const userIndex = this.users.findIndex(u => u.email === currentUser.email);
-
-      if (userIndex !== -1) {
-
-        this.users[userIndex] = currentUser;
-
-        localStorage.setItem('users', JSON.stringify(this.users));
-
-      }
-
-      resolve();
-
-    } else {
-
-      reject(new Error('No hay usuario autenticado'));
-
-    }
-
-  });
-
-}
-  
 }

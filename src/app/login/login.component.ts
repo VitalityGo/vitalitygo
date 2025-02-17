@@ -21,16 +21,22 @@ export class LoginComponent {
     private authService: AuthService
   ) {}
 
-  onSubmit() {
+  async onSubmit() {
     if (!this.email || !this.password) {
       this.errorMessage = 'Por favor, complete todos los campos';
       return;
     }
 
-    if (this.authService.login(this.email, this.password)) {
-      this.router.navigate(['/home']);
-    } else {
-      this.errorMessage = 'Email o contraseña incorrectos';
+    try {
+      const success = await this.authService.login(this.email, this.password);
+      if (success) {
+        this.router.navigate(['/home']);
+      } else {
+        this.errorMessage = 'Email o contraseña incorrectos';
+      }
+    } catch (error) {
+      console.error('Error en login:', error);
+      this.errorMessage = 'Error al iniciar sesión. Por favor, intente de nuevo.';
     }
   }
 }
